@@ -19,6 +19,9 @@ DEVICE_PATH := device/xiaomi/umi
 # Inherit from device.mk configuration
 $(call inherit-product, $(DEVICE_PATH)/device.mk)
 
+# Inherit any OrangeFox-specific settings
+$(call inherit-product-if-exists, $(DEVICE_PATH)/fox_lmi.mk)
+
 # Release name
 PRODUCT_RELEASE_NAME := cmi
 
