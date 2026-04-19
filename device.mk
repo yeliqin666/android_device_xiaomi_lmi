@@ -17,14 +17,16 @@
 # Configure base.mk
 $(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
 
-# Configure core_64_bit_only.mk
-$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit_only.mk)
+# Configure core_64_bit.mk
+$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 
 # Configure twrp
 $(call inherit-product, vendor/twrp/config/common.mk)
 
 PRODUCT_PACKAGES += \
-    bootctrl.xiaomi_sm8250.recovery
+    bootctrl.xiaomi_sm8250.recovery \
+    qcom_decrypt \
+    qcom_decrypt_fbe
 
 # SHIPPING API
 ifeq ($(TW_USE_FBEV2), true)
@@ -32,9 +34,6 @@ PRODUCT_SHIPPING_API_LEVEL := 30
 else
 PRODUCT_SHIPPING_API_LEVEL := 29
 endif
-
-# VNDK API
-PRODUCT_TARGET_VNDK_VERSION := 31
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
