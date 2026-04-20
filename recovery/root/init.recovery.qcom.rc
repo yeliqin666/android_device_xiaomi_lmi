@@ -31,6 +31,8 @@ on early-fs
 
 on fs
     export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
+    # Fix vibrator AIDL NDK library naming (Android 12+ dropped _platform suffix)
+    symlink /system/lib64/android.hardware.vibrator-V1-ndk.so /vendor/lib64/android.hardware.vibrator-V1-ndk_platform.so
     chown system system /sys/bus/i2c/drivers/aw8697_haptic/2-005a/f0_save
     chown system system /sys/bus/i2c/drivers/aw8697_haptic/2-005a/osc_save
     chown system system /sys/bus/i2c/drivers/aw8697_haptic/3-005a/osc_save
