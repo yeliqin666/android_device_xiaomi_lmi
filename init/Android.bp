@@ -1,15 +1,14 @@
 cc_library_static {
-    name: "libinit_umi",
+    name: "libinit_lmi",
     header_libs: [
         "libbase_headers",
     ],
     cflags: [
         "-Wall",
-//      "-DBUILD_FOR_CMI",
     ],
     static_libs: [
         "libbase",
     ],
-    srcs: ["init_umi.cpp"],
+    srcs: ["init_lmi.cpp"],
     recovery_available: true,
 }

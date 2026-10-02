@@ -14,21 +14,17 @@
 # limitations under the License.
 #
 
-DEVICE_PATH := device/xiaomi/umi
+DEVICE_PATH := device/xiaomi/lmi
 
 # Inherit from device.mk configuration
 $(call inherit-product, $(DEVICE_PATH)/device.mk)
-
-# Inherit any OrangeFox-specific settings
-$(call inherit-product-if-exists, $(DEVICE_PATH)/fox_lmi.mk)
 
 # Release name
 PRODUCT_RELEASE_NAME := lmi
 
 ## Device identifier. This must come after all inclusions
-PRODUCT_DEVICE := umi
+PRODUCT_DEVICE := lmi
 PRODUCT_NAME := twrp_lmi
 PRODUCT_BRAND := Xiaomi
-PRODUCT_MODEL := Redmi K30 Pro
+PRODUCT_MODEL := POCO F2 Pro
 PRODUCT_MANUFACTURER := Xiaomi
-TW_FRAMERATE := 60
