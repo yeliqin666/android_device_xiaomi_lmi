@@ -1,84 +1,43 @@
-# android_device_xiaomi_umi_TWRP
-For building TWRP for Xiaomi Mi 10 / 10 Pro
+# OrangeFox device tree for POCO F2 Pro / Redmi K30 Pro (lmi)
 
-TWRP device tree for Xiaomi Mi 10 and Mi 10 Pro
+Recovery device tree for building [OrangeFox Recovery](https://orangefox.tech) R12 on the `fox_16.0` manifest.
 
-Kernel and all blobs are extracted from [miui_CMI_21.9.17_1c6ed0daa1_11.0.zip](https://hugeota.d.miui.com/21.9.17/miui_CMI_21.9.17_1c6ed0daa1_11.0.zip) firmware.
+Based on [sekaiacg/android_device_xiaomi_umi_TWRP](https://github.com/sekaiacg/android_device_xiaomi_umi_TWRP) (SM8250 unified tree), reduced to lmi only.
 
-The Xiaomi Mi 10 (codenamed _"umi"_) and Xiaomi Mi 10 Pro (codenamed _"cmi"_) are high-end smartphones from Xiaomi.
+| Device       | POCO F2 Pro / Redmi K30 Pro / Redmi K30 Pro Zoom Edition |
+| -----------: | :------------------------------------------------------- |
+| Codename     | lmi                                                      |
+| SoC          | Qualcomm SM8250 Snapdragon 865                           |
+| Partitions   | non-A/B, dedicated `recovery` (128 MB), dynamic `super`  |
+| Encryption   | FBE v2 + metadata encryption, keymaster 4.1              |
+| Display      | 2400 x 1080, 6.67", pop-up front camera                  |
+| Shipped with | Android 10                                               |
 
-Xiaomi Mi 10 / 10 Pro was announced and released in February 2020.
+Kernel, dtb and recovery dtbo in `prebuilt/lmi` come from stock MIUI.
 
-## Device specifications
+## Build
 
-| Device       | Xiaomi Mi 10 / 10 Pro                       |
-| -----------: | :------------------------------------------ |
-| SoC          | Qualcomm SM8250 Snapdragon 865              |
-| CPU          | 8x Qualcomm® Kryo™ 585 up to 2.84GHz        |
-| GPU          | Adreno 650                                  |
-| Memory       | 8GB / 12GB RAM (LPDDR5)                     |
-| Shipped Android version | 10                               |
-| Storage      | 128GB / 256GB / 512GB UFS 3.0 flash storage |
-| Battery      | Non-removable Li-Po 4780mAh                 |
-| Dimensions   | 162.58 x 74.8 x 8.96 mm                     |
-| Display      | 2340 x 1080 (19.5:9), 6.67 inch             |
-
-## Device picture
-
-![Xiaomi Mi 10](https://cdn.cnbj0.fds.api.mi-img.com/b2c-shopapi-pms/pms_1581494372.61732687.jpg)
-
-## Features
-
-**Works**
-
-- Booting.
-- **Decryption** (Android 11)
-- ADB
-- MTP
-- OTG
-- Super partition functions
-- Vibration
-
-Mi 10 is using Dynamic Partition! We need update from TWRP.
-
-## Compile
-
-First checkout minimal twrp with omnirom tree:
-
-```
-repo init -u git://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-11
+```bash
+repo init -u https://gitlab.com/OrangeFox/Manifest.git -b fox_16.0 --depth=1
 repo sync
-```
+git clone <this repo> -b fox_16.0 device/xiaomi/lmi
 
-Then add these projects to .repo/manifest.xml:
-
-```xml
-<project path="device/xiaomi/umi" name="sekaiacg/android_device_xiaomi_umi_TWRP" remote="github" revision="android-12.1" />
-```
-
-Use ccache
-```
-#Enable ccache
-export USE_CCACHE=1
-export CCACHE_EXEC=$(which ccache)
-```
-
-Finally execute these:
-
-```
-export ALLOW_MISSING_DEPENDENCIES=true
-. build/envsetup.sh
-lunch twrp_umi-eng
+export FOX_BUILD_DEVICE=lmi
+source build/envsetup.sh
+lunch twrp_lmi-bp2a-eng
 mka recoveryimage
 ```
 
-To test it:
+Output: `out/target/product/lmi/recovery.img`.
 
-```
-fastboot boot out/target/product/umi/recovery.img
+Test without flashing:
+
+```bash
+fastboot boot out/target/product/lmi/recovery.img
 ```
 
-## Thanks
-- [FsCrypt fix by mauronofrio](https://github.com/mauronofrio/android_bootable_recovery)
-- [Decryption by bigbiff](https://github.com/bigbiff/android_bootable_recovery)
-- [Oneplus 8 TWRP by mauronofrio](https://github.com/mauronofrio/android_device_oneplus_instantnoodle_TWRP)
+## Status
+
+Not yet built or tested on `fox_16.0`. Before release, run the full
+[OrangeFox test suite](https://wiki.orangefox.tech/dev/maintainerships) against
+MIUI 12/13 and Android 14, 15 and 16 custom ROMs, with decryption checked on each.
