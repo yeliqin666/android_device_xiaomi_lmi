@@ -13,7 +13,9 @@ Based on [sekaiacg/android_device_xiaomi_umi_TWRP](https://github.com/sekaiacg/a
 | Display      | 2400 x 1080, 6.67", pop-up front camera                  |
 | Shipped with | Android 10                                               |
 
-Kernel, dtb and recovery dtbo in `prebuilt/lmi` come from stock MIUI.
+Kernel, dtb and recovery dtbo in `prebuilt/lmi` come from the AxionOS 2.8 (20261002) `boot.img` and `dtbo.img`:
+Linux 4.19.325 built from [Nyxal-GH/android_kernel_xiaomi_sm8250](https://github.com/Nyxal-GH/android_kernel_xiaomi_sm8250),
+with erofs and exfat built in. The stock MIUI kernel cannot mount the erofs `vendor`/`odm` of Android 16 ROMs.
 
 ## Build
 
